@@ -1,1 +1,1 @@
-import React from 'react';const InputForm = () => {    return (        <h1>hello</h1>    )}export default InputForm;
+import React from 'react';const InputForm = ({getWeather}) => {    return (        <form            onSubmit = {getWeather}        >            <input type="text" name='location' placeholder='Search Location' />            <button>Search</button>        </form>    )}export default InputForm;
