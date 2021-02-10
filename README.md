@@ -1,1 +1,1 @@
-# react-weather-app
+# React WeatherA simple weather app built with React<hr>**APIs**Weather data is retrieved from http://openweathermap.org/<hr>Responsive designThe app can be used on the phone<hr># Clone & installClone this repo `git clone git@github.com:arttusulkonen/react-weather-app.git`open project using IDE run npm installnpm start
