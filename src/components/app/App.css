@@ -1,4 +1,26 @@
 .container{
     display: flex;
-    margin: 0 auto;
+    justify-content: center;
+    text-align: center;
+    height: 100vh;
+    align-items: center;
 }
+.wrapper{
+    padding: 20px;
+    width: 500px;
+    height: 500px;
+    border-radius: 5%;
+    background: rgba(238, 238, 238, .3);
+}
+.data{
+    justify-content: center
+}
+
+@media (max-width: 375px) {
+    .wrapper{
+        width: 400px;
+        height: 400px;
+    }
+}
+
+

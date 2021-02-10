@@ -1,0 +1,1 @@
+.weather{    padding: 50px;}.temp{    font-size: 70px;}.icon{    width: 70px;    height: 70px;}.welcome{    padding-top: 70px;}@media (max-width: 522px) {    .weather{        padding-top:30px;    }}@media (max-width: 375px) {    .temp{        font-size: 40px;    }    .welcome h1{        font-size: 25px;    }}

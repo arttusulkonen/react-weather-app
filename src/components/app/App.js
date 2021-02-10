@@ -19,8 +19,10 @@ export default class App extends Component {
         error: '',
         cod: '',
         icon: '',
-    }
+        title: 'Welcome, this is a weather app.',
+        text: 'You can check weather in your city.'
 
+    }
 
     // Create a function that contains the application logic
     getWeather = async (event) => {
@@ -48,10 +50,12 @@ export default class App extends Component {
                 city: '',
                 country: '',
                 icon: '',
+                title: '',
+                text: '',
                 //and display error message
                 error: `"${place}" not found, please enter the correct city`
             })
-        } else if (data.cod === '400'){
+        } else if (data.cod === '400') {
             // if input-field is empty
             this.setState({
                 temp: null,
@@ -60,10 +64,12 @@ export default class App extends Component {
                 city: '',
                 country: '',
                 icon: '',
-                error: "Enter the place where you would like to know the weather."
+                title: '',
+                text: '',
+                error: "Enter the place to find out what's the weather."
             })
             // if server response == 200
-            // assign data to variables
+            // assigning data to variables
         } else {
             this.setState({
                 temp: data.main.temp,
@@ -74,18 +80,24 @@ export default class App extends Component {
                 descr: data.weather[0].description,
                 icon: data.weather[0].icon,
                 error: '',
+                title: '',
+                text: '',
             })
         }
     }
 
-    render(){
+    render() {
         return (
             <div className='container'>
-                <div className="App">
-                    <InputForm getWeather = {this.getWeather}/>
-                    <WeatherData {...this.state}/>
-                </div>
+                <div className='wrapper'>
+                    <div className='data'>
+                        <InputForm getWeather={this.getWeather}/>
+                        <WeatherData {...this.state}/>
+                    </div>
+                <div>
             </div>
+        </div>
+    </div>
         );
     }
 }
