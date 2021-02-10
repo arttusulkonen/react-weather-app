@@ -1,0 +1,1 @@
+import React from 'react';const WeatherData = () => {    return (        <h1>hello</h1>    )}export default WeatherData;
