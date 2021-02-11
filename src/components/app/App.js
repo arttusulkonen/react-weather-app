@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 import InputForm from "../input-form";
 import WeatherData from "../weather-data";
+import Welcome from "../welcome/"
 
 //get api-key
 const API = '6e1acbd3d9d9c85dca6b27db42890fff';
@@ -19,72 +20,53 @@ export default class App extends Component {
         error: '',
         cod: '',
         icon: '',
-        title: 'Welcome, this is a weather app.',
-        text: 'You can check weather in your city.'
-
+        welcomeBox: true // by default welcomeBox == true..
     }
 
-    // Create a function that contains the application logic
     getWeather = async (event) => {
         //get location from input
+
         let place = event.target.elements.location.value;
 
-        //cancel page reload
+         //cancel page reload
         event.preventDefault();
 
-        //get a response from the server
-        const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${place}&appid=${API}&units=metric`);
-
-        //save the response from the server to data variable
-        const data = await res.json();
-        console.log(data)
-
-        // error checking
-        //if server response '404' 'city not found'
-        //or incorrect value entered
-        if (data.cod === '404') {
-            this.setState({  // set default value to variables..
-                temp: null,
-                temp_max: null,
-                temp_min: null,
-                city: '',
-                country: '',
-                icon: '',
-                title: '',
-                text: '',
-                //and display error message
-                error: `"${place}" not found, please enter the correct city`
-            })
-        } else if (data.cod === '400') {
-            // if input-field is empty
-            this.setState({
-                temp: null,
-                temp_max: null,
-                temp_min: null,
-                city: '',
-                country: '',
-                icon: '',
-                title: '',
-                text: '',
-                error: "Enter the place to find out what's the weather."
-            })
-            // if server response == 200
-            // assigning data to variables
-        } else {
-            this.setState({
-                temp: data.main.temp,
-                temp_max: data.main.temp_max,
-                temp_min: data.main.temp_min,
-                city: data.name,
-                country: data.sys.country,
-                descr: data.weather[0].description,
-                icon: data.weather[0].icon,
-                error: '',
-                title: '',
-                text: '',
-            })
-        }
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${place}&appid=${API}&units=metric`
+        // Get data from the API
+        fetch(url)
+            // If the request was successful assign the data to state
+            .then((res) => {
+                    res.json().then((data) => {
+                        this.setState({
+                            temp: data.main.temp,
+                            temp_max: data.main.temp_max,
+                            temp_min: data.main.temp_min,
+                            city: data.name,
+                            country: data.sys.country,
+                            descr: data.weather[0].description,
+                            icon: data.weather[0].icon,
+                            error: '',
+                            welcomeBox: false // and when we get response from server, set welcomeBox to false
+                        })
+                    }).catch((err) => {
+                        //if server response '404' 'city not found'
+                        //or incorrect value entered
+                        this.setState({ // set default value to state..
+                            temp: '',
+                            city: '',
+                            country: null,
+                            descr: null,
+                            icon: null,
+                            // and show error
+                            error: `"${place}" not found, please enter the correct city.`,
+                            welcomeBox: false
+                        })
+                        console.log(err);
+                    })
+                }
+            )
     }
+
 
     render() {
         return (
@@ -92,7 +74,9 @@ export default class App extends Component {
                 <div className='wrapper'>
                     <div className='data'>
                         <InputForm getWeather={this.getWeather}/>
-                        <WeatherData {...this.state}/>
+
+                        {/*by default show welcome box, if the server responds show weather or error and welcomeBox set to false */}
+                        {this.state.welcomeBox ?  <Welcome />: <WeatherData {...this.state}/> }
                     </div>
                 <div>
             </div>

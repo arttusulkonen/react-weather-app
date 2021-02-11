@@ -1,0 +1,1 @@
+.welcome h1{    padding-top: 70px;    font-size: 45px;}@media (max-width: 375px) {    .welcome h1{        padding-top: 50px;        font-size: 30px;    }    .welcome h2{        padding-top: 20px;        font-size: 25px;    }}
