@@ -20,7 +20,8 @@ export default class App extends Component {
         error: '',
         cod: '',
         icon: '',
-        welcomeBox: true // by default welcomeBox == true..
+        welcomeBox: true, // by default welcomeBox == true..,
+        loading: false
     }
 
     getWeather = async (event) => {
@@ -32,10 +33,14 @@ export default class App extends Component {
         event.preventDefault();
 
         const url = `https://api.openweathermap.org/data/2.5/weather?q=${place}&appid=${API}&units=metric`
+
         // Get data from the API
         fetch(url)
             // If the request was successful assign the data to state
             .then((res) => {
+                this.setState({
+                    loading: true
+                })
                     res.json().then((data) => {
                         this.setState({
                             temp: data.main.temp,
@@ -46,7 +51,8 @@ export default class App extends Component {
                             descr: data.weather[0].description,
                             icon: data.weather[0].icon,
                             error: '',
-                            welcomeBox: false // and when we get response from server, set welcomeBox to false
+                            welcomeBox: false, // and when we get response from server, set welcomeBox to false
+                            loading: false
                         })
                     }).catch((err) => {
                         //if server response '404' 'city not found'
@@ -59,7 +65,8 @@ export default class App extends Component {
                             icon: null,
                             // and show error
                             error: `"${place}" not found, please enter the correct city.`,
-                            welcomeBox: false
+                            welcomeBox: false,
+                            loading: false
                         })
                         console.log(err);
                     })
