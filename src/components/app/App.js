@@ -24,7 +24,7 @@ export default class App extends Component {
         loading: false
     }
 
-    getWeather = async (event) => {
+    getWeather = (event) => {
         //get location from input
         let place = event.target.elements.location.value;
 
