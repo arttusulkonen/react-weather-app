@@ -24,7 +24,7 @@ export default class App extends Component {
         loading: false
     }
 
-    getWeather = (event) => {
+    getWeather = async (event) => {
         //get location from input
         let place = event.target.elements.location.value;
 
@@ -34,7 +34,7 @@ export default class App extends Component {
         const url = `https://api.openweathermap.org/data/2.5/weather?q=${place}&appid=${API}&units=metric`
 
         // Get data from the API
-        fetch(url)
+        await fetch(url)
 
             .then((res) => {
                 this.setState({ // while the server is sending data..
