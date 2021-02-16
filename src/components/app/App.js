@@ -4,7 +4,7 @@ import InputForm from "../input-form";
 import WeatherData from "../weather-data";
 import Welcome from "../welcome/"
 
-//get api-key
+//api-key
 const API = '6e1acbd3d9d9c85dca6b27db42890fff';
 
 export default class App extends Component {
@@ -26,7 +26,6 @@ export default class App extends Component {
 
     getWeather = async (event) => {
         //get location from input
-
         let place = event.target.elements.location.value;
 
          //cancel page reload
@@ -36,12 +35,13 @@ export default class App extends Component {
 
         // Get data from the API
         fetch(url)
-            // If the request was successful assign the data to state
+
             .then((res) => {
-                this.setState({
-                    loading: true
+                this.setState({ // while the server is sending data..
+                    loading: true // spinner
                 })
-                    res.json().then((data) => {
+                    res.json() // decode the response in JSON format
+                        .then((data) => {  // If the request was successful assign the data to state
                         this.setState({
                             temp: data.main.temp,
                             temp_max: data.main.temp_max,
@@ -52,7 +52,7 @@ export default class App extends Component {
                             icon: data.weather[0].icon,
                             error: '',
                             welcomeBox: false, // and when we get response from server, set welcomeBox to false
-                            loading: false
+                            loading: false // and spinner
                         })
                     }).catch((err) => {
                         //if server response '404' 'city not found'
@@ -63,8 +63,7 @@ export default class App extends Component {
                             country: null,
                             descr: null,
                             icon: null,
-                            // and show error
-                            error: `"${place}" not found, please enter the correct city.`,
+                            error: `"${place}" not found, please enter the correct city.`, // and show error
                             welcomeBox: false,
                             loading: false
                         })
