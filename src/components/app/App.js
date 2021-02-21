@@ -28,33 +28,34 @@ export default class App extends Component {
         //get location from input
         let place = event.target.elements.location.value;
 
-         //cancel page reload
+        //cancel page reload
         event.preventDefault();
 
         const url = `https://api.openweathermap.org/data/2.5/weather?q=${place}&appid=${API}&units=metric`
 
+        this.setState({ // while the server is sending data..
+            welcomeBox: false,
+            loading: true  // spinner
+        })
+
         // Get data from the API
         await fetch(url)
-
             .then((res) => {
-                this.setState({ // while the server is sending data..
-                    loading: true // spinner
-                })
                     res.json() // decode the response in JSON format
                         .then((data) => {  // If the request was successful assign the data to state
-                        this.setState({
-                            temp: data.main.temp,
-                            temp_max: data.main.temp_max,
-                            temp_min: data.main.temp_min,
-                            city: data.name,
-                            country: data.sys.country,
-                            descr: data.weather[0].description,
-                            icon: data.weather[0].icon,
-                            error: '',
-                            welcomeBox: false, // and when we get response from server, set welcomeBox to false
-                            loading: false // and spinner
-                        })
-                    }).catch((err) => {
+                            this.setState({
+                                temp: data.main.temp,
+                                temp_max: data.main.temp_max,
+                                temp_min: data.main.temp_min,
+                                city: data.name,
+                                country: data.sys.country,
+                                descr: data.weather[0].description,
+                                icon: data.weather[0].icon,
+                                error: '',
+                                welcomeBox: false, // and when we get response from server, set welcomeBox to false
+                                loading: false // and spinner
+                            })
+                        }).catch((err) => {
                         //if server response '404' 'city not found'
                         //or incorrect value entered
                         this.setState({ // set default value to state..
@@ -82,12 +83,12 @@ export default class App extends Component {
                         <InputForm getWeather={this.getWeather}/>
 
                         {/*by default show welcome box, if the server responds show weather or error and welcomeBox set to false */}
-                        {this.state.welcomeBox ?  <Welcome />: <WeatherData {...this.state}/> }
+                        {this.state.welcomeBox ? <Welcome/> : <WeatherData {...this.state}/>}
                     </div>
-                <div>
+                    <div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
         );
     }
 }
