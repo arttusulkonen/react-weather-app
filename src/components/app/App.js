@@ -24,23 +24,24 @@ export default class App extends Component {
         loading: false
     }
 
-    getWeather = async (event) => {
+    getWeather = (event) => {
         //get location from input
         let place = event.target.elements.location.value;
 
         //cancel page reload
         event.preventDefault();
 
-        const url = `https://api.openweathermap.org/data/2.5/weather?q=${place}&appid=${API}&units=metric`
-
         this.setState({ // while the server is sending data..
             welcomeBox: false,
             loading: true  // spinner
         })
 
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${place}&appid=${API}&units=metric`
+
         // Get data from the API
-        await fetch(url)
+        fetch(url)
             .then((res) => {
+
                     res.json() // decode the response in JSON format
                         .then((data) => {  // If the request was successful assign the data to state
                             this.setState({
@@ -68,7 +69,6 @@ export default class App extends Component {
                             welcomeBox: false,
                             loading: false
                         })
-                        console.log(err);
                     })
                 }
             )
